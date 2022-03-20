@@ -22,3 +22,7 @@
   <code>npm run dev</code>
   The localhost:3000 should be available
 
+## Notes
+
+  This is for development purposes only. For production, it needs to create a different docker-compose and Dockerfile.
+  This template has phpmyadmin configured in docker-compose. If you don't need it, just remove it from docker-compose.yaml
