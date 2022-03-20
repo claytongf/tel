@@ -1,0 +1,55 @@
+version: '3'
+
+services:
+    app:
+      build: .
+      container_name: template-app
+      entrypoint: dockerize -wait tcp://db:3306 -timeout 40s ./.docker/entrypoint.sh
+      ports:
+        - "3000:3000"
+      environment:
+        - HOST=0.0.0.0
+      volumes:
+        - .:/var/www
+      depends_on:
+        - db
+
+    nginx:
+      build: .docker/nginx
+      container_name: template-nginx
+      restart: always
+      tty: true
+      ports:
+        - "8000:80"
+      volumes:
+        - .:/var/www
+      depends_on:
+        - app
+
+    db:
+      build: ./.docker/mysql
+      container_name: template-db
+      restart: always
+      tty: true
+      ports:
+        - "33006:3306"
+      volumes:
+        - ./.docker/dbdata:/var/lib/mysql
+        - ./.docker/mysql:/docker-entrypoint-initdb.d
+      environment:
+        - MYSQL_ROOT_PASSWORD=root
+
+    phpmyadmin:
+      depends_on:
+        - db
+      container_name: template-phpmyadmin
+      image: phpmyadmin/phpmyadmin:latest
+      restart: always
+      links:
+        - db
+      ports:
+        - "8001:80"
+      environment:
+        - PMA_HOST=db
+        - PMA_USER=root
+        - PMA_PASSWORD=root
