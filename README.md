@@ -23,6 +23,7 @@ First, in docker-compose.yaml file, you need to change the name of the container
   <code>cd backend</code>
   <code>cp .env.example .env</code>
   <code>composer install</code>
+  <code>php artisan migrate --seed</code>
 - To run the NuxtJs frontend, you need to run the commands (inside the bash):<br/>
   <code>cd frontend</code><br/>
   <code>npm install</code><br/>
