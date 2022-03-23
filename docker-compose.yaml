@@ -2,13 +2,11 @@ version: '3'
 
 services:
     app:
-      build: .
+      build:
+        context: .
+        dockerfile: ./Dockerfile
       container_name: telp-app
-      entrypoint: dockerize -wait tcp://db:3306 -timeout 40s ./.docker/entrypoint.sh
-      ports:
-        - "3000:3000"
-      environment:
-        - HOST=0.0.0.0
+      entrypoint: ./.docker/entrypoint.sh
       volumes:
         - .:/var/www
       depends_on:
@@ -26,6 +24,21 @@ services:
       depends_on:
         - app
 
+    frontend:
+      build:
+        context: ./frontend/.docker
+        dockerfile: Dockerfile
+      container_name: telp-frontend
+      entrypoint: ./.docker/entrypoint.sh
+      restart: always
+      ports:
+        - "3000:3000"
+      volumes:
+        - ./frontend:/home/node/app
+      depends_on:
+        - db
+        - app
+
     db:
       build: ./.docker/mysql
       container_name: telp-db
@@ -38,7 +51,6 @@ services:
         - ./.docker/mysql:/docker-entrypoint-initdb.d
       environment:
         - MYSQL_ROOT_PASSWORD=root
-
     phpmyadmin:
       depends_on:
         - db

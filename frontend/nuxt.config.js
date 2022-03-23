@@ -1,7 +1,6 @@
 import colors from 'vuetify/es5/util/colors'
-import { defineNuxtConfig } from '@nuxt/bridge'
 
-export default defineNuxtConfig({
+export default {
   // Global page headers: https://go.nuxtjs.dev/config-head
   head: {
     titleTemplate: '%s - Ptel',
@@ -108,4 +107,4 @@ export default defineNuxtConfig({
   // Build Configuration: https://go.nuxtjs.dev/config-build
   build: {
   }
-})
+}

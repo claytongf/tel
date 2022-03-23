@@ -2,7 +2,7 @@
   <v-row justify="center" align="center">
     <v-col cols="12">
       <v-card outlined>
-        <v-card-title>Logar-se</v-card-title>
+        <v-card-title>Olá, Visitante</v-card-title>
         <form class="mt-5" @submit.prevent="login">
           <v-card-text>
               <v-container>

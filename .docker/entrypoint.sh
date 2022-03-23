@@ -11,8 +11,11 @@ fi
 if [ ! -f ".env.testing" ]; then
   cp .env.testing.example .env.testing
 fi
+
+pwd
 composer install
 php artisan key:generate
-php artisan migrate
+php artisan db:create
+php artisan migrate --seed
 
 php-fpm
